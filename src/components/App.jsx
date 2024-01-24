@@ -9,32 +9,39 @@ import { STATUSES } from './Utils/Constants';
 
 export class App extends Component {
   state = {
-    images: null,
+    hits: [],
     status: STATUSES.idle,
     error: null,
     q: '',
     page: 1,
+    isLoadMore: false,
   };
 
-  onSubmit = event => {
-    event.preventDefault();
-    const searchValue = event.currentTarget.elements.q.value;
-    this.setState({ q: searchValue });
+  // onSubmit = event => {
+  //   event.preventDefault();
+  //   const searchValue = event.currentTarget.elements.q.value;
+  //   this.setState({ q: searchValue });
+  // };
+
+  onSubmit = q => {
+    this.setState({ q, page: 1, hits: [], isLoadMore: false });
   };
 
-  fetchImagesByQuery = async q => {
-    try {
-      const images = await requestImagesByQuery(q);
-      this.setState({ images });
-    } catch (error) {
-      this.setState(error);
-    }
-    requestImagesByQuery();
-  };
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.q !== this.state.q || prevState.page !== this.state.page) {
-      this.fetchImagesByQuery(this.state.q, this.state.page);
+  async componentDidUpdate(_, prevState) {
+    const { q, page } = this.state;
+    if (prevState.q !== q || prevState.page !== page) {
+      try {
+        this.setState({ status: STATUSES.pending });
+        const { hits, totalHits } = await requestImagesByQuery(q, page);
+        console.log(hits)
+        this.setState({ hits, status: STATUSES.success });
+        this.setState(prevState => ({
+          hits: [...prevState.hits, ...hits],
+          isLoadMore: page < Math.ceil(totalHits / 12),
+        }));
+      } catch (error) {
+        this.setState({ error: error.message, status: STATUSES.success });
+      }
     }
   }
 
@@ -45,17 +52,19 @@ export class App extends Component {
   };
 
   render() {
+    
+    const { hits, isLoadMore } = this.state;
     return (
       <div className={css.app}>
         <Searchbar onSubmit={this.onSubmit} />
         {this.state.status === STATUSES.pending && <Loader />}
         {this.state.status === STATUSES.error && <p>ERROR{this.state.error}</p>}
-        {this.state.status === STATUSES.success &&
-          Array.isArray(this.props.state.images) && (
-            <ImageGallery images={this.state.images} />
-          )}
-
-        <Button onLoadMore={this.onLoadMore} />
+        {this.state.status === STATUSES.success && (
+          Array.isArray(hits) && (
+            <ImageGallery hits={hits} />
+          )
+        )}
+        {isLoadMore && <Button onLoadMore={this.onLoadMore} />}
       </div>
     );
   }

@@ -16,24 +16,23 @@ export class ImageGalleryItem extends Component {
   };
 
   render() {
-    return (
-      <div>
-        <li className={css.ImageGalleryItem}>
-          <img
-            onClick={this.openModal}
-            className={css.imageGalleryItemImage}
-            src={this.props.webformatURL}
-            alt={this.props.tag}
-          />
 
-          <Modal
-            isModalOpen={this.state.isModalOpen}
-            onCloseModal={this.state.closeModal}
-          >
-            <img src={this.props.largeImageURL} alt={this.props.tag} />
-          </Modal>
-        </li>
-      </div>
+    return (
+      <li className={css.ImageGalleryItem}>
+        <img
+          onClick={this.openModal}
+          className={css.imageGalleryItemImage}
+          src={this.props.webformatURL}
+          alt={this.props.tags}
+        />
+
+        {/* <Modal
+          isModalOpen={this.state.isModalOpen}
+          onCloseModal={this.state.closeModal}
+        >
+          <img src={this.props.largeImageURL} alt={this.props.tags} />
+        </Modal> */}
+      </li>
     );
   }
 }
