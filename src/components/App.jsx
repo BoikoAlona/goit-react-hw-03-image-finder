@@ -15,6 +15,7 @@ export class App extends Component {
     q: '',
     page: 1,
     isLoadMore: false,
+    randomId: 0,
   };
 
   // onSubmit = event => {
@@ -24,12 +25,12 @@ export class App extends Component {
   // };
 
   onSubmit = q => {
-    this.setState({ q, page: 1, hits: [], isLoadMore: false });
+    this.setState({ q, page: 1, hits: [], isLoadMore: false, randomId: Math.random() });
   };
 
   async componentDidUpdate(_, prevState) {
-    const { q, page } = this.state;
-    if (prevState.q !== q || prevState.page !== page) {
+    const { q, page, randomId } = this.state;
+    if (prevState.q !== q || prevState.page !== page || prevState.randomId !== randomId) {
       try {
         this.setState({ status: STATUSES.pending });
         const { hits, totalHits } = await requestImagesByQuery(q, page);
