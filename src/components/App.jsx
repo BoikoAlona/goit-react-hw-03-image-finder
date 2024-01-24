@@ -15,26 +15,18 @@ export class App extends Component {
     q: '',
     page: 1,
     isLoadMore: false,
-    randomId: 0,
   };
 
-  // onSubmit = event => {
-  //   event.preventDefault();
-  //   const searchValue = event.currentTarget.elements.q.value;
-  //   this.setState({ q: searchValue });
-  // };
-
   onSubmit = q => {
-    this.setState({ q, page: 1, hits: [], isLoadMore: false, randomId: Math.random() });
+    this.setState({ q, page: 1, hits: [], isLoadMore: false});
   };
 
   async componentDidUpdate(_, prevState) {
-    const { q, page, randomId } = this.state;
-    if (prevState.q !== q || prevState.page !== page || prevState.randomId !== randomId) {
+    const { q, page } = this.state;
+    if (prevState.q !== q || prevState.page !== page) {
       try {
         this.setState({ status: STATUSES.pending });
         const { hits, totalHits } = await requestImagesByQuery(q, page);
-        console.log(hits)
         this.setState({ hits, status: STATUSES.success });
         this.setState(prevState => ({
           hits: [...prevState.hits, ...hits],
