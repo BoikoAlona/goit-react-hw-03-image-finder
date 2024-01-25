@@ -3,13 +3,15 @@ import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 
 export const ImageGallery = hits => {
   const hitsArr = hits.hits;
-  
-  const uniqueArr = hitsArr.filter((item, index, array) => array.indexOf(item) === index);
-  
+
+  const uniqueArr = hitsArr.filter(
+    (item, index, array) => array.indexOf(item) === index
+  );
+
   return (
     <ul className={css.imageGallery}>
       {Array.isArray(uniqueArr) &&
-        uniqueArr.map((el) => {
+        uniqueArr.map(el => {
           console.log(el.id);
           return (
             <ImageGalleryItem

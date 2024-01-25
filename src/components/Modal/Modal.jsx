@@ -2,25 +2,24 @@ import { Component } from 'react';
 import css from './Modal.module.css';
 
 export class Modal extends Component {
-
-  handleOverlayClick = (event) => {
+  handleOverlayClick = event => {
     if (event.target === event.currentTarget) {
       this.props.closeModal();
-    };
-  }
+    }
+  };
 
-  handleKeyPress = (event) => {
-    if (event.code === "Escape") {
+  handleKeyPress = event => {
+    if (event.code === 'Escape') {
       this.props.closeModal();
-    };
-  }
+    }
+  };
 
   componentDidMount() {
-    window.addEventListener("keydown", this.handleKeyPress)
+    window.addEventListener('keydown', this.handleKeyPress);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("keydown", this.handleKeyPress)
+    window.removeEventListener('keydown', this.handleKeyPress);
   }
 
   render() {
@@ -33,5 +32,5 @@ export class Modal extends Component {
         </div>
       </div>
     );
-  };
+  }
 }

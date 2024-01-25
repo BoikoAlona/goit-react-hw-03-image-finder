@@ -18,7 +18,7 @@ export class App extends Component {
   };
 
   onSubmit = q => {
-    this.setState({ q, page: 1, hits: [], isLoadMore: false});
+    this.setState({ q, page: 1, hits: [], isLoadMore: false });
   };
 
   async componentDidUpdate(_, prevState) {
@@ -45,17 +45,14 @@ export class App extends Component {
   };
 
   render() {
-    
     const { hits, isLoadMore } = this.state;
     return (
       <div className={css.app}>
         <Searchbar onSubmit={this.onSubmit} />
         {this.state.status === STATUSES.pending && <Loader />}
         {this.state.status === STATUSES.error && <p>ERROR{this.state.error}</p>}
-        {this.state.status === STATUSES.success && (
-          Array.isArray(hits) && (
-            <ImageGallery hits={hits} />
-          )
+        {this.state.status === STATUSES.success && Array.isArray(hits) && (
+          <ImageGallery hits={hits} />
         )}
         {isLoadMore && <Button onLoadMore={this.onLoadMore} />}
       </div>

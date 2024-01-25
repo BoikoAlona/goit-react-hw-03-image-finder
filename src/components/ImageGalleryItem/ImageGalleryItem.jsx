@@ -30,7 +30,8 @@ export class ImageGalleryItem extends Component {
             closeModal={this.closeModal}
             largeImageURL={this.props.largeImageURL}
             tags={this.props.tags}
-          />)}
+          />
+        )}
       </li>
     );
   }
