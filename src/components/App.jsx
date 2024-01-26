@@ -51,7 +51,7 @@ export class App extends Component {
         <Searchbar onSubmit={this.onSubmit} />
         {this.state.status === STATUSES.pending && <Loader />}
         {this.state.status === STATUSES.error && <p>ERROR{this.state.error}</p>}
-        {this.state.status === STATUSES.success && Array.isArray(hits) && (
+        {hits.length > 0 && (
           <ImageGallery hits={hits} />
         )}
         {isLoadMore && <Button onLoadMore={this.onLoadMore} />}

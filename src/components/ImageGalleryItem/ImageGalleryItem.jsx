@@ -7,19 +7,17 @@ export class ImageGalleryItem extends Component {
     isModalOpen: false,
   };
 
-  openModal = () => {
-    this.setState({ isModalOpen: true });
-  };
-
-  closeModal = () => {
-    this.setState({ isModalOpen: false });
+  toggleModal = () => {
+    this.setState(prevState => ({
+      isModalOpen: !prevState.isModalOpen,
+    }));
   };
 
   render() {
     return (
       <li key={this.props.id} className={css.ImageGalleryItem}>
         <img
-          onClick={this.openModal}
+          onClick={this.toggleModal}
           className={css.imageGalleryItemImage}
           src={this.props.webformatURL}
           alt={this.props.tags}
@@ -27,7 +25,7 @@ export class ImageGalleryItem extends Component {
         {this.state.isModalOpen && (
           <Modal
             isModalOpen={this.state.isModalOpen}
-            closeModal={this.closeModal}
+            toggleModal={this.toggleModal}
             largeImageURL={this.props.largeImageURL}
             tags={this.props.tags}
           />

@@ -2,15 +2,16 @@ import { Component } from 'react';
 import css from './Modal.module.css';
 
 export class Modal extends Component {
+  
   handleOverlayClick = event => {
     if (event.target === event.currentTarget) {
-      this.props.closeModal();
+      this.props.toggleModal();
     }
   };
 
   handleKeyPress = event => {
     if (event.code === 'Escape') {
-      this.props.closeModal();
+      this.props.toggleModal();
     }
   };
 
@@ -26,7 +27,7 @@ export class Modal extends Component {
     return (
       <div>
         <div className={css.overlay} onClick={this.handleOverlayClick}>
-          <div className={css.modal} onClick={this.props.openModal}>
+          <div className={css.modal} onClick={this.props.toggleModal}>
             <img src={this.props.largeImageURL} alt={this.props.tags} />
           </div>
         </div>
