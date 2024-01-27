@@ -27,7 +27,7 @@ export class Modal extends Component {
     return (
       <div>
         <div className={css.overlay} onClick={this.handleOverlayClick}>
-          <div className={css.modal} onClick={this.props.toggleModal}>
+          <div className={css.modal}>
             <img src={this.props.largeImageURL} alt={this.props.tags} />
           </div>
         </div>

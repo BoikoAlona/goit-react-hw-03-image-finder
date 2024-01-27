@@ -27,8 +27,9 @@ export class App extends Component {
       try {
         this.setState({ status: STATUSES.pending });
         const { hits, totalHits } = await requestImagesByQuery(q, page);
-        this.setState({ hits, status: STATUSES.success });
+        
         this.setState(prevState => ({
+          status: STATUSES.success,
           hits: [...prevState.hits, ...hits],
           isLoadMore: page < Math.ceil(totalHits / 12),
         }));
